@@ -3,15 +3,19 @@
 
 {% block body %}
  
-   <h2>Home</h2>
- 
    {% if message %}
        <div>{{ message }}</div>
    {% endif %}
- 
-   <p>
-       This is placeholder for now. Welcome to the medical simulation app!
-   </p>
+    <div style="float:left;">
+        <img style="width:600px;" src="https://www.uq.edu.au/news/filething/get/228099/MED%20Diagnostic%201%20.jpg" alt="Italian Trulli">   
+    </div>
+    <div style="float:right;text-align: right;">
+        <h1>Welcome to the MDSA - the Medical </h1>
+        <h1>Diagnosis Simulation App!</h1><br>
+        <p>This app was created to allow people to design and </p><p>experience medical diagnosis simulations. Hope</p><p>you have fun  and learn something!</p>
+        <a href="{% url 'guide' %}" class="button">Get Started!</a>
+        <button class="button"><a href="{% url 'guide' %}">Get Started!</a></button>
+    </div>
  
 {% endblock %}
 
@@ -20,6 +24,49 @@
         * {
             margin-left: 20px;
             margin-right: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: .75rem 1.25rem;
+            border-radius: 10rem;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: .15rem;
+            transition: all .3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            margin-right:2.5%;
+        }
+        button:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0cf;
+            border-radius: 10rem;
+            z-index: -2;
+        }
+        button:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background-color: darken(#0cf, 15%);
+            transition: all .3s;
+            border-radius: 10rem;
+            z-index: -1;
+        }
+        button:hover {
+            color: #fff;
+        }
+        button:hover:before {
+            width: 100%;
         }
     </style>
 {% endblock %}
