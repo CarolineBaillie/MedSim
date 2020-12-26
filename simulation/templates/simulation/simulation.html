@@ -1,0 +1,169 @@
+{% extends "simulation/layout.html" %}
+
+
+{% block body %}
+ 
+    {% ifequal type "mySim" %}
+        <h2>My Simulations</h2>
+    {% else %}
+        <h2>{{type|title}} Simulations</h2>
+    {% endifequal %}
+ 
+   {% if message %}
+       <div>{{ message }}</div>
+   {% endif %}
+
+   {% ifequal type "browse" %}
+        <br><form class="example" action="{% url 'browse' %}" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form><br>
+   {% endifequal %}
+
+   {% ifequal type "mySim" %}
+        {% if check %}
+            {% for c in check %}
+                <div class="check">
+                    <h3 style="text-align: center;">{{ c.0 }}</h3>
+                    <h5 style="text-align: center;"><u>Is their diagnosis correct?</u></h5><br>
+                    <div style="display:inline-block; margin-left:18%; text-align: center;">
+                        <h6>Your Diagnosis:</h6>
+                        <p>{{ c.1 }}</p>
+                        <button style="background-color:green;"><a href="{% url 'affirmed' simID=c.3 a='y' %}">&#10003;</a></button>
+                    </div>
+                    <div style="display:inline-block; text-align: center;">
+                        <h6>Their Diagnosis:</h6>
+                        <p>{{ c.2 }}</p>
+                        <button style="background-color:red;"><a href="{% url 'affirmed' simID=c.3 a='n' %}">&#x2717;</a></button>
+                    </div>
+                </div>
+            {% endfor %}
+            <hr>
+        {% endif %}
+    {% endifequal %}
+ 
+
+    {% ifequal type "completed" %}
+        {% for sim in simulations %}
+            <div class="sim">
+                <h3>{{sim.title}}</h3>
+                <p>{{sim.desc}}</p>
+                <h5>Score: {{sim.score}}/100</h5>
+                <h6>Your diagnosis was <b>{% if sim.correctDiag %} correct {% else %} wrong {% endif %}</b></h6>
+            </div><br>
+        {% endfor %}
+    {% else %}
+        {% for sim in simulations %}
+            <div class="sim">
+                <h3>{{sim.title}}</h3>
+                <h5>{{sim.difficulty}}</h5>
+                <p>{{sim.desc}}</p>
+                <div class="buttons">
+                    <button class="button">
+                        <a  href="{% url 'play' sim.id %}">Play</a>
+                    </button>
+                </div>
+            </div><br>
+        {% endfor %}
+        {% for sim in cSims %}
+            <div class="sim">
+                <h3>{{sim.title}}</h3>
+                <h5>{{sim.difficulty}}</h5>
+                <p>{{sim.desc}}</p>
+                <div class="buttons">
+                    <button class="button">
+                        <a  href="{% url 'reset' sim.id %}">Reset</a>
+                    </button>
+                </div>
+            </div><br>
+        {% endfor %}
+    {% endifequal %}
+
+    <script>
+        console.log(document.querySelectorAll("h5").length)
+        len = document.querySelectorAll("h5").length
+        for (var i=0; i < len; i++){
+            tag = document.querySelectorAll("h5")[i]
+            if (tag.innerText == "Easy") {
+                tag.style.color = "green";
+            } else if (tag.innerText == "Medium") {
+                tag.style.color = "orange";
+            } else if (tag.innerText == "Hard") {
+                tag.style.color = "red";
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        .check {
+            border: black solid 2px;
+            border-radius: 7px;
+            padding: 10px;
+            width:40%;
+            margin: 0 auto;
+        }
+        .sim {
+            border: black solid 2px;
+            border-radius: 7px;
+            padding: 10px;
+        }
+        .button {
+            padding: 8px 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            background-color: white; 
+            color: black; 
+            border: 2px solid #0e93d1;
+            border-radius:7px;
+        }
+        .button:hover {
+            background-color: #0e93d1;
+            color: white;
+        }
+        a {
+            text-decoration: none;
+            color:black;
+        }
+        form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 60%;
+        background: #f1f1f1;
+        }
+        form.example button {
+        float: left;
+        width: 10%;
+        height:6.5%;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+        }
+        form.example button:hover {
+        background: #0b7dda;
+        }
+        form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+        }
+    </style>
+{% endblock %}

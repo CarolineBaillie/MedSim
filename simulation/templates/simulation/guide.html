@@ -1,0 +1,62 @@
+{% extends "simulation/layout.html" %}
+
+
+{% block body %}
+ 
+   <h2>Guide</h2>
+ 
+   {% if message %}
+       <div>{{ message }}</div>
+   {% endif %}
+ 
+   <div>
+        <h4>Purpose:</h4>
+        <div>
+            <p>This is a medical diagnosis simulation app. The aim of this app is to provide people with a fun and interactive platform where they can create and play diagnosis games. Through these games they can broaden their understanding of the medical field and the work of doctors.</p>
+        </div>
+       <h4>Instructions:</h4>
+       <div>
+           <p>On this platform you can either create or play a simulation. </p>
+            <p><b>Create:</b>If you choose to create, you will need to fill in all the necessary patient information as well as fill in any possible tests, questions, and hints. Once created, the simulation is avaliable to everyone to play. Your only other job if you have created a simulation is to keep track of people's final diagnosises and tell the application whether they are correct or not.</p>
+            <p><b>Play:</b>If you play a simulation, you have access to all the patient information and any other additional information, tests, questions, or hints that the creator has provided you with. You can reply simulations as many time as you would like and the goal is to get the correct diagnosis and the highest score. Be sure to save your progress every time you want to exit!</p>
+        </div>
+       <h4>Navbar:</h4>
+       <div>
+           <p><b>Guide:</b>That's this page that tells you all about how to use this app</p>
+           <p><b>Create:</b>On this page you create your own simulation. There are a lot of input boxes in order to gain the most information. Most boxs' inputs are required, but some are optional. On the top half it will say optional, but then all tests, questions, and hints are optional.</p>
+           <p><b>My Simulations:</b>On this page all the simulations that you have created will appear. Additionally, at the top, if someone else has completed your simulation you will see their final diagnosis and will have to say whether it is correct or not.</p>
+           <p><b>Browse:</b>Here you will see all simulations that are created. You will also be able to use the search bar to narrow down the results.</p>
+           <p><b>Current:</b>All the simulations you are currently working on will be shown on this page.</p>
+           <p><b>Completed:</b>All the simulations you have completed will be shown here. You can see the score and see if your diagnosis was correct or not. Note: you will not see the results appear here until the creater has approved your answer.</p>
+        </div>
+        <h4>How to play the simulation:</h4>
+        <div>
+           <p>To play a simulation, you click the play button next to the one you would like (or reset if you have already played it). You will then be taken to the simulation page. You will see 5 possible buttons to click (left sidebar, right sidebar, hints, scoring key, and save and exit)</p>
+            <p><b>Left Sidebar:</b>The left sidebar will give you access to the basic patient information, the symptoms, and any additional information the creator has provided you with. To see this information click on the words for what information you want to see. To get out of this, click the X in the upper righthand corner.</p>
+            <p><b>Right Sidebar:</b>Here you have access to performing different tests or asking different questions on/to the patient. There may be no tests or questions, or there may be 6 of each - it just depends on the creator. To perform/ask each test/question click the button below the test/question. The results will be shown. Make sure to pay attention to the notice at the top telling you how may free tests/questions you have left. Once that number is at 0, every test/question you perform/ask will cost you points in your final score. On this sidebar you can also click Final Diagnosis to submit your answer.</p>
+            <p><b>Hints:</b>Click this button if you are stuck. Possible hints will show up and you can then click Get Hint to see it. Hints cost the most points and there no free ones, so be careful when you use them.</p>
+            <p><b>Scoring Key:</b>This button is on the top right and shows you the different point costs or addtions of tests, questions, hints, and more.</p>
+            <p><b>Save and Exit:</b>This is a very important button! At the end of every sitting, you should click this button to save your progress. If you don't click this button, then all your progress will be lost.</p>
+        </div>
+        <h4>Scoring:</h4>
+        <div>
+            <p>Your score is out of 100 points</p>
+            <p><b>Starting value:</b>50 points</p>
+            <p><b>Correct diagnosis:</b>+40 points</p>
+            <p><b>Performing a positive test:</b>+10 points</p>
+            <p><b>Test:</b>-15 points</p>
+            <p><b>Questions:</b>-10 points</p>
+            <p><b>Hints:</b>-20 points</p>
+        </div>
+   </div>
+ 
+{% endblock %}
+
+{% block style %}
+    <style>
+        * {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    </style>
+{% endblock %}

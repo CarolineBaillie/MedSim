@@ -1,0 +1,25 @@
+{% extends "simulation/layout.html" %}
+
+
+{% block body %}
+ 
+   <h2>Home</h2>
+ 
+   {% if message %}
+       <div>{{ message }}</div>
+   {% endif %}
+ 
+   <p>
+       This is placeholder for now. Welcome to the medical simulation app!
+   </p>
+ 
+{% endblock %}
+
+{% block style %}
+    <style>
+        * {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    </style>
+{% endblock %}

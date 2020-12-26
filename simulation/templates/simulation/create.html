@@ -1,0 +1,352 @@
+{% extends "simulation/layout.html" %}
+
+
+{% block body %}
+ 
+   <h2>Create a Simulation</h2>
+ 
+   {% if message %}
+       <div>{{ message }}</div>
+   {% endif %}
+ 
+   <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+        <div class="basicInfo">
+            <h4>Basic Simulation Information</h4>
+            <h6>Title</h6>
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="title" placeholder="Find Title">
+            </div>
+            <h6>Description</h6>
+            <div class="form-group">
+                <textarea class="form-control" name="description" placeholder="Find Description" rows="3"></textarea>
+            </div>
+            <h6>Difficulty</h6>
+            <div class="form-group">
+                <select multiple style="height: 70px;" class="form-control" name="difficulty">
+                    <option style="color:green;">Easy</option>
+                    <option style="color:orange;">Medium</option>
+                    <option style="color:red;">Hard</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="patientInfo">
+            <h4>Patient Information</h4>
+            <div class="left" style="float:left;width:30%;">
+                <h6>Name</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="name" placeholder="Find Name">
+                </div>
+                <h6>Gender</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="gender" placeholder="Find Gender">
+                </div>
+                <h6>Weight</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="weight" placeholder="Find Weight">
+                </div>
+                <h6>Sexually Active</h6>
+                <div class="form-group">
+                    <select multiple style="height: 50px;" class="form-control" name="sexuallyActive">
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="right" style="float:right;margin-right:200;width:30%;">
+                <h6>Age</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="age" placeholder="Find Age">
+                </div>
+                <h6>Date of Birth</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="date" name="birth" placeholder="mm/dd/yyyy">
+                </div>
+                <h6>Race and Ethinicity</h6>
+                <div class="form-group">
+                    <select class="form-control" name="race">
+                        <option>Other</option>
+                        <option>American Indian or Alska Native</option>
+                        <option>Asian</option>
+                        <option>Black or African American</option>
+                        <option>Hispanic or LatinX</option>
+                        <option>Native Hawaiian or Other Pacific Islander</option>
+                        <option>White</option>
+                    </select>
+                </div>
+                <h6>Height</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="height" placeholder="Find Height">
+                </div>
+            </div>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <h6>Current Medications (optional)</h6>
+            <div class="form-group">
+                <textarea class="form-control" name="medications" placeholder="Find Medications" rows="3"></textarea>
+            </div>
+            <h6>Allergies (optional)</h6>
+            <div class="form-group">
+                <textarea class="form-control" name="allergies" placeholder="Find Allergies" rows="3"></textarea>
+            </div>
+            <h6>Additional Illnesses (optional)</h6>
+            <div class="form-group">
+                <textarea class="form-control" name="illnesses" placeholder="Find Illnesses" rows="3"></textarea>
+            </div>
+            <h6>Symptoms</h6>
+            <div class="form-group">
+                <textarea class="form-control" name="symptoms" placeholder="Find Symptoms" rows="3"></textarea>
+            </div>
+            <h6>Additional Notes (optional)</h6>
+            <div class="form-group">
+                <textarea class="form-control" name="notes" placeholder="Find Notes" rows="3"></textarea>
+            </div>
+            <h6>URL Image of Infected Area (optional)</h6>
+            <div class="form-group">
+                <textarea class="form-control" name="url" placeholder="Image URL" rows="3"></textarea>
+            </div>
+            <h6>Final Diagnosis - Figure out what going to do</h6>
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="diagnosis" placeholder="Find Diagnosis">
+            </div>
+        </div>
+
+        <div class="tests">
+            <h4>Tests (costs 15 points)</h4>
+            <div class="test">
+                <h5>Test 1</h5>
+                <h6>Test Name</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="test1" placeholder="Find Test1">
+                </div>
+                <h6>Description of Test</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="descTest1" placeholder="Find Description1" rows="3"></textarea>
+                </div>
+                <h6>Tests Result</h6>
+                <div class="form-group">
+                    <select class="form-control" name="test1Result">
+                        <option>No Select</option>
+                        <option>Positive</option>
+                        <option>Negative</option>
+                    </select>
+                </div>
+            </div>
+            <div class="test">
+                <h5>Test 2</h5>
+                <h6>Test Name</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="test2" placeholder="Find Test2">
+                </div>
+                <h6>Description of Test</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="descTest2" placeholder="Find Description2" rows="3"></textarea>
+                </div>
+                <h6>Tests Result</h6>
+                <div class="form-group">
+                    <select class="form-control" name="test2Result">
+                        <option>No Select</option>
+                        <option>Positive</option>
+                        <option>Negative</option>
+                    </select>
+                </div>
+            </div>
+            <div class="test">
+                <h5>Test 3</h5>
+                <h6>Test Name</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="test3" placeholder="Find Test3">
+                </div>
+                <h6>Description of Test</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="descTest3" placeholder="Find Description3" rows="3"></textarea>
+                </div>
+                <h6>Tests Result</h6>
+                <div class="form-group">
+                    <select class="form-control" name="test3Result">
+                        <option>No Select</option>
+                        <option>Positive</option>
+                        <option>Negative</option>
+                    </select>
+                </div>
+            </div>
+            <div class="test">
+                <h5>Test 4</h5>
+                <h6>Test Name</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="test4" placeholder="Find Test4">
+                </div>
+                <h6>Description of Test</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="descTest4" placeholder="Find Description4" rows="3"></textarea>
+                </div>
+                <h6>Tests Result</h6>
+                <div class="form-group">
+                    <select class="form-control" name="test4Result">
+                        <option>No Select</option>
+                        <option>Positive</option>
+                        <option>Negative</option>
+                    </select>
+                </div>
+            </div>
+            <div class="test">
+                <h5>Test 5</h5>
+                <h6>Test Name</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="test5" placeholder="Find Test5">
+                </div>
+                <h6>Description of Test</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="descTest5" placeholder="Find Description5" rows="3"></textarea>
+                </div>
+                <h6>Tests Result</h6>
+                <div class="form-group">
+                    <select class="form-control" name="test5Result">
+                        <option>No Select</option>
+                        <option>Positive</option>
+                        <option>Negative</option>
+                    </select>
+                </div>
+            </div>
+            <div class="test">
+                <h5>Test 6</h5>
+                <h6>Test Name</h6>
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="test6" placeholder="Find Test6">
+                </div>
+                <h6>Description of Test</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="descTest6" placeholder="Find Description6" rows="3"></textarea>
+                </div>
+                <h6>Tests Result</h6>
+                <div class="form-group">
+                    <select class="form-control" name="test6Result">
+                        <option>No Select</option>
+                        <option>Positive</option>
+                        <option>Negative</option>
+                    </select>
+                </div>
+            </div>
+            <h6>How many free tests?</h6>
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="testNum" placeholder="Find testNum">
+            </div>
+        </div>
+
+        <div class="questions">
+            <h4>Questions (costs 10 points)</h4>
+            <div class="question">
+                <h5>Question 1</h5>
+                <h6>Question</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="question1" placeholder="Find Question1" rows="3"></textarea>
+                </div>
+                <h6>Response</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="response1" placeholder="Find Response1" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="question">
+                <h5>Question 2</h5>
+                <h6>Question</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="question2" placeholder="Find Question2" rows="3"></textarea>
+                </div>
+                <h6>Response</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="response2" placeholder="Find Response2" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="question">
+                <h5>Question 3</h5>
+                <h6>Question</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="question3" placeholder="Find Question3" rows="3"></textarea>
+                </div>
+                <h6>Response</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="response3" placeholder="Find Response3" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="question">
+                <h5>Question 4</h5>
+                <h6>Question</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="question4" placeholder="Find Question4" rows="3"></textarea>
+                </div>
+                <h6>Response</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="response4" placeholder="Find Response4" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="question">
+                <h5>Question 5</h5>
+                <h6>Question</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="question5" placeholder="Find Question5" rows="3"></textarea>
+                </div>
+                <h6>Response</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="response5" placeholder="Find Response5" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="question">
+                <h5>Question 6</h5>
+                <h6>Question</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="question6" placeholder="Find Question6" rows="3"></textarea>
+                </div>
+                <h6>Response</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="response6" placeholder="Find Response6" rows="3"></textarea>
+                </div>
+            </div>
+            <h6>How many free questions?</h6>
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="questionNum" placeholder="Find questionNum">
+            </div>
+        </div>
+
+
+        <div class="hints">
+            <h4>Hints (costs 20 points)</h4>
+            <div class="hint">
+                <h6>Hint 1</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="hint1" placeholder="Find Hint1" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="hint">
+                <h6>Hint 2</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="hint2" placeholder="Find Hint2" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="hint">
+                <h6>Hint 3</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="hint3" placeholder="Find Hint3" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="hint">
+                <h6>Hint 4</h6>
+                <div class="form-group">
+                    <textarea class="form-control" name="hint4" placeholder="Find Hint4" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+
+        
+        <input class="btn btn-primary" type="submit" value="Create Simulation">
+    </form>
+ 
+{% endblock %}
+
+{% block style %}
+    <style>
+        * {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <title>Game</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a style="margin-left:100px;" class="nav-link" href="javascript:history.go(-1)" onclick="saveAndExit()">Save and Exit</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a style="margin-left:100px;" class="nav-link" href="#"><b>{{simulation.title}}</b></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a style="margin-right:100px;" class="nav-link" href="javascript:void(0)" onclick="showScore()">Scoring Key</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+          
+          <div id="mySidebarLeft" class="sidebar sbLeft">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <a href="javascript:void(0)" onclick="showPatient()">Patient Overview</a>
+            <a href="javascript:void(0)" onclick="showSymptoms()">Symptoms</a>
+            <a href="javascript:void(0)" onclick="showInfo()">Additional Info</a>
+          </div>
+          
+          <div id="mySidebarRight" class="sidebar sbRight">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNavRight()">×</a>
+            <a href="javascript:void(0)" onclick="showTests()">Tests</a>
+            <a href="javascript:void(0)" onclick="showQs()">Questions</a>
+            <a href="javascript:void(0)" onclick="showDiag()">Final Diagnosis</a>
+          </div>
+      
+          <div id="main">
+            <button class="openbtn left" onclick="openNav()">Left side bar</button>
+            <button class="openbtn right" onclick="openNavRight()">Right side bar</button>
+          </div>
+          
+          <div id="hint">
+            <button class="hint" onclick="showHint()">Hints</button>
+          </div>
+      
+          <div id="viewHint" style="display:none;">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeHint()">×</a>
+            <br><br>
+            {% if h1 != -1 %}
+                <h4>Hint1</h4>
+                {% if h1 == 1 %}
+                    <p style="font-size: 20px;"><b>{{simulation.hint1}}</b></p>
+                {% elif h1 == 0 %}
+                    <button id="h1" onclick="seeHint(this.id)">Get Hint</button>
+                    <p id="rh1" style="font-size: 20px;display: none;"><b>{{simulation.hint1}}</b></p>
+                {% endif %}
+                <br><br>
+            {% endif %}
+            {% if h2 != -1 %}
+                <h4>Hint2</h4>
+                {% if h2 == 1 %}
+                    <p style="font-size: 20px;"><b>{{simulation.hint2}}</b></p>
+                {% elif h2 == 0 %}
+                    <button id="h2" onclick="seeHint(this.id)">Get Hint</button>
+                    <p id="rh2" style="font-size: 20px;display: none;"><b>{{simulation.hint2}}</b></p>
+                {% endif %}
+                <br><br>
+            {% endif %}
+            {% if h3 != -1 %}
+                <h4>Hint3</h4>
+                {% if h3 == 1 %}
+                    <p style="font-size: 20px;"><b>{{simulation.hint3}}</b></p>
+                {% elif h3 == 0 %}
+                    <button id="h3" onclick="seeHint(this.id)">Get Hint</button>
+                    <p id="rh3" style="font-size: 20px;display: none;"><b>{{simulation.hint3}}</b></p>
+                {% endif %}
+                <br><br>
+            {% endif %}
+            {% if h4 != -1 %}
+                <h4>Hint4</h4>
+                {% if h4 == 1 %}
+                    <p style="font-size: 20px;"><b>{{simulation.hint4}}</b></p>
+                {% elif h4 == 0 %}
+                    <button id="h4" onclick="seeHint(this.id)">Get Hint</button>
+                    <p id="rh4" style="font-size: 20px;display: none;"><b>{{simulation.hint4}}</b></p>
+                {% endif %}
+                <br><br>
+            {% endif %}
+          </div>
+          
+          <div id="viewScore" style="display:none;font-size:25px;">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeScore()">×</a>
+            <br>
+            <p>Starting Value: 50 points</p>
+            <p>Questions: -10 points</p>
+            <p>Tests: -15 points</p>
+            <p>Hints: -20 points</p>
+            <p>Postivie Test: +10 points</p>
+            <p>Diagnosis: +40 points</p>
+          </div>
+          
+          <div id="patientInfo" class="leftBar" style="display:none;">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeLeft()">×</a>
+            <div class="text">
+                <div class="leftInfo">
+                    <h5><b>Name:</b></h5>
+                    <p class="pInfo">{{simulation.name}}</p>
+                    <h5><b>Gender:</b></h5>
+                    <p class="pInfo">{{simulation.gender}}</p>
+                    <h5><b>Weight:</b></h5>
+                    <p class="pInfo">{{simulation.weight}}</p>
+                    <h5><b>Sexually Active:</b></h5>
+                    <p class="pInfo">{{simulation.sexuallyActive}}</p>
+                </div>
+                <div class="rightInfo">
+                    <h5><b>Age:</b></h5>
+                    <p class="pInfo">{{simulation.age}}</p>
+                    <h5><b>Race:</b></h5>
+                    <p class="pInfo">{{simulation.race}}</p>
+                    <h5><b>Height:</b></h5>
+                    <p class="pInfo">{{simulation.height}}</p>
+                    <h5><b>Date of Birth:</b></h5>
+                    <p class="pInfo">{{simulation.birth}}</p>
+                </div>
+            </div>
+          </div>
+          
+          <div id="symptoms" class="leftBar" style="display:none;">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeLeft()">×</a>
+            <div class="text">
+                <h3><u>Symptoms:</u></h3>
+                <p>{{simulation.symptoms}}</p>
+            </div>
+          </div>
+          
+          <div id="addInfo" class="leftBar" style="display:none;">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeLeft()">×</a>
+            <div class="text">
+                <h3><u>Additional Info:</u></h3><br>
+                <h4>Current Medications:</h4>
+                <p>{{simulation.medications}}</p>
+                <h4>Allergies:</h4>
+                <p>{{simulation.allergies}}</p>
+                <h4>Additional Illnesses:</h4>
+                <p>{{simulation.illnesses}}</p>
+                <h4>Additional Notes:</h4>
+                <p>{{simulation.notes}}</p>
+                <h4>Image:</h4>
+                <img src="{{simulation.url}}" style="width:400px">
+            </div>
+          </div>
+          
+          <div id="tests" class="rightBar" style="display:none;">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeRight()">×</a>
+            <div class="text">
+                <p>Note: you have {{tLeft}} free test(s) left</p>
+                <h4>{{simulation.test1}}</h4>
+                <p>{{simulation.desc1}}</p>
+                {% if t1 == 1 %}
+                    <p style="font-size: 20px;"><b>{{simulation.test1Res}}</b></p>
+                {% elif t1 == 0 %}
+                    <button id="bt1" onclick="performTest(this.id)">Perform</button>
+                    <p id="rt1" style="display: none;font-size:20px;"><b>{{simulation.test1Res}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.test2}}</h4>
+                <p>{{simulation.desc2}}</p>
+                {% if t2 == 1 %}
+                    <p style="font-size: 20px;"><b>{{simulation.test2Res}}</b></p>
+                {% elif t2 == 0 %}
+                    <button id="bt2" onclick="performTest(this.id)">Perform</button>
+                    <p id="rt2" style="display: none;font-size:20px;"><b>{{simulation.test2Res}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.test3}}</h4>
+                <p>{{simulation.desc3}}</p>
+                {% if t3 == 1 %}
+                    <p style="font-size: 20px;"><b>{{simulation.test3Res}}</b></p>
+                {% elif t3 == 0 %}
+                    <button id="bt3" onclick="performTest(this.id)">Perform</button>
+                    <p id="rt3" style="display: none;font-size:20px;"><b>{{simulation.test3Res}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.test4}}</h4>
+                <p>{{simulation.desc4}}</p>
+                {% if t4 == 1 %}
+                    <p style="font-size: 20px;"><b>{{simulation.test4Res}}</b></p>
+                {% elif t4 == 0 %}
+                    <button id="bt4" onclick="performTest(this.id)">Perform</button>
+                    <p id="rt4" style="display: none;font-size:20px;"><b>{{simulation.test4Res}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.test5}}</h4>
+                <p>{{simulation.desc5}}</p>
+                {% if t5 == 1 %}
+                    <p style="font-size: 20px;">{<b>{simulation.test5Res}}</b></p>
+                {% elif t5 == 0 %}
+                    <button id="bt5" onclick="performTest(this.id)">Perform</button>
+                    <p id="rt5" style="display: none;font-size:20px;"><b>{{simulation.test5Res}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.test6}}</h4>
+                <p>{{simulation.desc6}}</p>
+                {% if t6 == 1 %}
+                    <p style="font-size: 20px;"><b>{{simulation.testRes}}</b></p>
+                {% elif t6 == 0 %}
+                    <button id="bt6" onclick="performTest(this.id)">Perform</button>
+                    <p id="rt6" style="display: none;font-size:20px;"><b>{{simulation.test6Res}}</b></p>
+                {% endif %}
+            </div>
+          </div>
+          
+          <div id="questions" class="rightBar" style="display:none;">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeRight()">×</a>
+            <div class="text">
+                <p>Note: you have {{qLeft}} free question(s) left</p>
+                <h4>{{simulation.quest1}}</h4>
+                {% if q1 == 1 %}
+                    <p style="font-size: 25px;"><b>{{simulation.resp1}}</b></p>
+                {% elif q1 == 0 %}
+                    <button id="q1" onclick="askQuestion(this.id)">Ask</button>
+                    <p id="r1" style="display:none;font-size:25px;"><b>{{simulation.resp1}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.quest2}}</h4>
+                {% if q2 == 1 %}
+                    <p style="font-size: 25px;"><b>{{simulation.resp2}}</b></p>
+                {% elif q2 == 0 %}
+                    <button id="q2" onclick="askQuestion(this.id)">Ask</button>
+                    <p id="r2" style="display:none;font-size:25px;"><b>{{simulation.resp2}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.quest3}}</h4>
+                {% if q3 == 1 %}
+                    <p style="font-size: 25px;"><b>{{simulation.resp3}}</b></p>
+                {% elif q3 == 0 %}
+                    <button id="q3" onclick="askQuestion(this.id)">Ask</button>
+                    <p id="r3" style="display:none;font-size:25px;"><b>{{simulation.resp3}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.quest4}}</h4>
+                {% if q4 == 1 %}
+                    <p style="font-size: 25px;"><b>{{simulation.resp4}}</b></p>
+                {% elif q4 == 0 %}
+                    <button id="q4" onclick="askQuestion(this.id)">Ask</button>
+                    <p id="r4" style="display:none;font-size:25px;"><b>{{simulation.resp4}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.quest5}}</h4>
+                {% if q5 == 1 %}
+                    <p style="font-size: 25px;"><b>{{simulation.resp5}}</b></p>
+                {% elif q5 == 0 %}
+                    <button id="q5" onclick="askQuestion(this.id)">Ask</button>
+                    <p id="r5" style="display:none;font-size:25px;"><b>{{simulation.resp5}}</b></p>
+                {% endif %}
+                <br><br>
+                <h4>{{simulation.quest6}}</h4>
+                {% if q6 == 1 %}
+                    <p style="font-size: 25px;"><b>{{simulation.resp6}}</b></p>
+                {% elif q6 == 0 %}
+                    <button id="q6" onclick="askQuestion(this.id)">Ask</button>
+                    <p id="r6" style="display:none;font-size:25px;"><b>{{simulation.resp6}}</b></p>
+                {% endif %}
+                <br><br>
+            </div>
+          </div>
+          
+          <div id="diag" class="rightBar" style="display:none;">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeRight()">×</a>
+            <div class="text">
+              <h3><u>Diagnosis:</u></h3>
+              <p>Note: Once submitted your diagnosis will be sent to the creater of this simulation for checking.</p>
+              <div style="width:70%;" class="form-group">
+                <input autofocus id="fd" class="form-control" type="text" name="diagnosis" placeholder="Final Diagnosis">
+                <div class="alert alert-danger" id="EA" style="text-align:center;display:none;" role="alert">
+                    You must submit an actual value!
+                </div>
+              </div>    
+              <button><a style="color:black;" id="sb" href="javascript:history.go(-1)" onclick="submit()">Submit</a></button>
+            </div>
+          </div>
+        <script>
+            var tests = []
+            var questions = []
+            var hints = []
+
+            function submit() {
+                //change href just in case
+                document.getElementById('sb').href ="javascript:history.go(-1)"; 
+                // get diagnosis
+                diagnosis = document.getElementById("fd").value
+                // if diagnosis is not filled
+                if (diagnosis == "") {
+                    // change href so doesnt go anywhere
+                    document.getElementById('sb').href ="javascript:void(0)"; 
+                    // display the error message
+                    document.getElementById("EA").style.display = "block";
+                } else {
+                    // get id of simulation
+                    id = {{simulation.id}}
+                    //create a js ajax api send
+                    fetch('/submit', {
+                        method: "PUT",
+                        body: JSON.stringify({
+                            tests: tests,
+                            questions: questions,
+                            hints: hints,
+                            diag: diagnosis,
+                            id: id
+                        })
+                    })
+                }
+            }
+
+            function saveAndExit() {
+                // get id of simulation
+                id = {{simulation.id}}
+                //create a js ajax api send
+                fetch('/save', {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        tests: tests,
+                        questions: questions,
+                        hints: hints,
+                        id: id
+                    })
+                })
+
+            }
+
+            function performTest(test) {
+                // find id of results
+                var num = test.slice(1,3);
+                var result = "r"+num;
+                // send back num which is the name of the test performed
+                tests.push(num);
+                // hide the button and show the results
+                document.getElementById(`${test}`).style.display = "none";
+                document.getElementById(`${result}`).style.display = "block";
+            }
+
+            function askQuestion(question) {
+                // find id of response
+                var placeholder = question.slice(1);
+                var response = "r"+placeholder;
+                // send back num which is the name of the test performed
+                questions.push(question);
+                // hide the button and show the results
+                document.getElementById(`${question}`).style.display = "none";
+                document.getElementById(`${response}`).style.display = "block";
+            }
+
+            function seeHint(hint) {
+                // find id of hint
+                var response = "r"+hint;
+                // send back num which is the name of the test performed
+                hints.push(hint);
+                // hide the button and show the results
+                document.getElementById(`${hint}`).style.display = "none";
+                document.getElementById(`${response}`).style.display = "block";
+            }
+
+            function openNav() {
+            document.getElementById("mySidebarLeft").style.width = "250px";
+            }
+
+            function closeNav() {
+            document.getElementById("mySidebarLeft").style.width = "0";
+            }
+
+            function openNavRight() {
+            document.getElementById("mySidebarRight").style.width = "250px";
+            }
+
+            function closeNavRight() {
+            document.getElementById("mySidebarRight").style.width = "0";
+            }
+
+            function showPatient() {
+            document.getElementById("patientInfo").style.display = "block";
+            document.getElementById("mySidebarLeft").style.display = "none";
+            }
+
+            function showInfo() {
+            document.getElementById("addInfo").style.display = "block";
+            document.getElementById("mySidebarLeft").style.display = "none";
+            }
+
+            function showSymptoms() {
+            document.getElementById("symptoms").style.display = "block";
+            document.getElementById("mySidebarLeft").style.display = "none";
+            }
+
+            function showTests() {
+            document.getElementById("tests").style.display = "block";
+            document.getElementById("mySidebarRight").style.display = "none";
+            }
+
+            function showQs() {
+            document.getElementById("questions").style.display = "block";
+            document.getElementById("mySidebarRight").style.display = "none";
+            }
+
+            function showDiag() {
+            document.getElementById("diag").style.display = "block";
+            document.getElementById("mySidebarRight").style.display = "none";
+            }
+
+            function closeLeft() {
+            document.getElementById("mySidebarLeft").style.display = "block";
+            document.getElementById("patientInfo").style.display = "none";
+            document.getElementById("symptoms").style.display = "none";
+            document.getElementById("addInfo").style.display = "none";
+            }
+
+            function closeRight() {
+            document.getElementById("mySidebarRight").style.display = "block";
+            document.getElementById("tests").style.display = "none";
+            document.getElementById("questions").style.display = "none";
+            document.getElementById("diag").style.display = "none";
+            }
+
+            function showHint() {
+            document.getElementById("viewHint").style.display = "block";
+            }
+
+            function closeHint() {
+            document.getElementById("viewHint").style.display = "none";
+            }
+
+            function showScore() {
+            document.getElementById("viewScore").style.display = "block";
+            }
+
+            function closeScore() {
+            document.getElementById("viewScore").style.display = "none";
+            }
+        </script>
+        <style>
+            /* CSS files add styling rules to your content */
+            body, html {
+            font-family: "Lato", sans-serif;
+            /* The image used */
+            background-image: url("https://d279m997dpfwgl.cloudfront.net/wp/2020/06/doctor-office.jpg");
+            /* Full height */
+            height: 100%; 
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            }
+            .rightInfo {
+                float:right;
+                margin-right:50px;
+            }
+            .leftInfo {
+                float:left;
+                margin-left:30px;
+            }
+            .pInfo {
+                font-size:20px;
+                margin-left:10px;
+            }
+            #viewHint {
+            left:25%;
+            margin-top:3%;
+            text-align:center;
+            width:50%;
+            height:65%;
+            border: black solid 2px;
+            position: fixed;
+            background-color:white;
+            }
+            #viewScore {
+            left:30%;
+            margin-top:7%;
+            text-align:center;
+            width:40%;
+            height:50%;
+            border: black solid 2px;
+            position: fixed;
+            background-color:white;
+            }
+            .leftBar {
+            height: 100%;
+            width: 500px;
+            position: fixed;
+            z-index: 1;
+            top: 7.6%;
+            left: 0;
+            background-color: lightblue;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            color:black;
+            }
+            .rightBar {
+            height: 100%;
+            width: 500px;
+            position: fixed;
+            z-index: 1;
+            top: 7.6%;
+            right: 0;
+            background-color: lightblue;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            color:black;
+            }
+            .text {
+            margin-left:20px;
+            }
+            .sbRight {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 7.6%;
+            right: 0;
+            background-color: lightblue;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            }
+            .sbLeft {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 7.6%;
+            left: 0;
+            background-color: lightblue;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            }
+            .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            }
+            .sidebar a:hover {
+            color: #f1f1f1;
+            }
+            .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            }
+            .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            color: #818181;
+            text-decoration: none;
+            }
+            .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            }
+            .openbtn:hover {
+            background-color: #444;
+            }
+            #main {
+            transition: margin-left .5s;
+            padding: 16px;
+            }
+            /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+            @media screen and (max-height: 450px) {
+            .sidebar {padding-top: 15px;}
+            .sidebar a {font-size: 18px;}
+            }
+            .right {
+            margin-left:80%;
+            float:right;
+            margin-top:-3.5%;
+            }
+            .left {
+            float:left;
+            }
+            .hint {
+            color:gold;
+            font-size:25px;
+            background-color:white;
+            border-radius:7px;
+            margin-left:60%;
+            margin-top:-100px;
+            }
+        </style>
+    </body>
+</html>
