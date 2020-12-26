@@ -26,7 +26,7 @@ SECRET_KEY = 'r&pu1oj2oer+&*)i8oj9=z3(m6^i)%k#-d^(sdeta3l_d%@=4g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://med-sim.herokuapp.com/','127.0.0.1']
+ALLOWED_HOSTS = ['med-sim.herokuapp.com','127.0.0.1']
 
 
 # Application definition
