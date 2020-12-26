@@ -13,8 +13,11 @@
         <h1>Welcome to the MDSA - the Medical </h1>
         <h1>Diagnosis Simulation App!</h1><br>
         <p>This app was created to allow people to design and </p><p>experience medical diagnosis simulations. Hope</p><p>you have fun  and learn something!</p>
-        <a href="{% url 'guide' %}" class="button">Get Started!</a>
-        <button class="button"><a href="{% url 'guide' %}">Get Started!</a></button>
+        {% if user.is_authenticated %}
+            <button class="button"><a href="{% url 'guide' %}">Get Started!</a></button>
+        {% else %}
+            <button class="button"><a href="{% url 'login' %}">Get Started!</a></button>
+        {% endif %}
     </div>
  
 {% endblock %}
