@@ -161,15 +161,15 @@ def play(request, sim_id):
     # if the test is in the list then set to true
     if "t1" in tList:
         t1 = 1
-    elif "t2" in tList:
+    if "t2" in tList:
         t2 = 1
-    elif "t3" in tList:
+    if "t3" in tList:
         t3 = 1
-    elif "t4" in tList:
+    if "t4" in tList:
         t4 = 1
-    elif "t5" in tList:
+    if "t5" in tList:
         t5 = 1
-    elif "t6" in tList:
+    if "t6" in tList:
         t6 = 1
     # same thing for questions
     # figure out if asked the questions already
@@ -205,15 +205,15 @@ def play(request, sim_id):
     # if the test is in the list then set to true
     if "q1" in qList:
         q1 = 1
-    elif "q2" in qList:
+    if "q2" in qList:
         q2 = 1
-    elif "q3" in qList:
+    if "q3" in qList:
         q3 = 1
-    elif "q4" in qList:
+    if "q4" in qList:
         q4 = 1
-    elif "q5" in qList:
+    if "q5" in qList:
         q5 = 1
-    elif "q6" in qList:
+    if "q6" in qList:
         q6 = 1
     # same thing but for hints
     # figure out if used the hint already
@@ -239,11 +239,11 @@ def play(request, sim_id):
     # if the test is in the list then set to true
     if "h1" in hList:
         h1 = 1
-    elif "h2" in hList:
+    if "h2" in hList:
         h2 = 1
-    elif "h3" in hList:
+    if "h3" in hList:
         h3 = 1
-    elif "h4" in hList:
+    if "h4" in hList:
         h4 = 1
     return render(request, "simulation/game.html", {
         "simulation": s,
@@ -522,7 +522,7 @@ def current(request):
     g = Game.objects.filter(user=request.user.username, isFinished=False, isDiagnosed=False)
     ids = []
     for game in g:
-        ids.append(game.pk)
+        ids.append(game.simID)
     s = Simulation.objects.filter(pk__in=ids)
     return render(request, "simulation/simulation.html", {
         "simulations": s,
