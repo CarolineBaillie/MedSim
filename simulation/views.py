@@ -448,6 +448,26 @@ def reset(request, sim_id):
     return HttpResponseRedirect(reverse("play", args=(sim_id,)))
     # return HttpResponseRedirect(reverse('create_rating', args=(video_id,)))
 
+# def completed(request):
+#     # get all games with my username where isFinished == True
+#     g = Game.objects.filter(user=request.user.username,isFinished=True)
+#     # get all ids
+#     ids = []
+#     for game in g:
+#         ids.append(game.pk)
+#     s = []
+#     # for each id create a list with to be displayed info
+#     for ID in ids:
+#         title = Simulation.objects.get(pk=ID).title
+#         desc = Simulation.objects.get(pk=ID).desc
+#         score = Game.objects.get(user=request.user.username,simID=ID).score
+#         isCorrect = Game.objects.get(user=request.user.username,simID=ID).isStarred
+#         if isCorrect:
+#             D = "correct"
+#         else:
+#             D = "wrong"
+#         l = [title, desc, score, D, ID]
+#         s.append(l)
 def completed(request):
     # get all games with my username where isFinished == True
     g = Game.objects.filter(user=request.user.username,isFinished=True)
@@ -458,10 +478,10 @@ def completed(request):
     s = []
     # for each id create a list with to be displayed info
     for ID in ids:
-        title = Simulation.objects.get(pk=ID).title
-        desc = Simulation.objects.get(pk=ID).desc
-        score = Game.objects.get(user=request.user.username,simID=ID).score
-        isCorrect = Game.objects.get(user=request.user.username,simID=ID).isStarred
+        title = Complete.obejects.get(simID=ID).title
+        desc = Complete.obejects.get(simID=ID).desc
+        score = Complete.obejects.get(simID=ID).score
+        isCorrect = Complete.obejects.get(simID=ID).isCorrect
         if isCorrect:
             D = "correct"
         else:
