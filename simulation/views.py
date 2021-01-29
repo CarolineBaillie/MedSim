@@ -474,10 +474,11 @@ def completed(request):
     # get all ids
     ids = []
     for game in g:
-        ids.append(game.pk)
+        ids.append(game.simID)
     s = []
     # for each id create a list with to be displayed info
     for ID in ids:
+        print(ID)
         title = Complete.objects.get(simID=ID).title
         desc = Complete.objects.get(simID=ID).desc
         score = Complete.objects.get(simID=ID).score
