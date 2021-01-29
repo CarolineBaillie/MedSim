@@ -478,10 +478,10 @@ def completed(request):
     s = []
     # for each id create a list with to be displayed info
     for ID in ids:
-        title = Complete.obejects.get(simID=ID).title
-        desc = Complete.obejects.get(simID=ID).desc
-        score = Complete.obejects.get(simID=ID).score
-        isCorrect = Complete.obejects.get(simID=ID).isCorrect
+        title = Complete.objects.get(simID=ID).title
+        desc = Complete.objects.get(simID=ID).desc
+        score = Complete.objects.get(simID=ID).score
+        isCorrect = Complete.objects.get(simID=ID).isCorrect
         if isCorrect:
             D = "correct"
         else:
