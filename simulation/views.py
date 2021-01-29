@@ -476,18 +476,18 @@ def completed(request):
     for game in g:
         ids.append(game.simID)
     s = []
+    c = Complete.objects.filter(simID__in=ids)
     # for each id create a list with to be displayed info
-    for ID in ids:
-        print(ID)
-        title = Complete.objects.get(simID=ID).title
-        desc = Complete.objects.get(simID=ID).desc
-        score = Complete.objects.get(simID=ID).score
-        isCorrect = Complete.objects.get(simID=ID).isCorrect
+    for com in c:
+        title = com.title
+        desc = com.desc
+        score = com.score
+        isCorrect = com.correctDiag
         if isCorrect:
             D = "correct"
         else:
             D = "wrong"
-        l = [title, desc, score, D, ID]
+        l = [title, desc, score, D, com.simID]
         s.append(l)
 
     # get all objects from Complete
